@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
 
-const Jobs = ({result}) => {
+const Jobs = ({ result }) => {
   return (
-    <div>{result}</div>
-  )
-}
+    <>
+      <div>
+        <h3 className="font-semibold text-xl ml-5 mb-0">
+          {result.length} Jobs Found !
+        </h3>
+        <section>{result}</section>
+      </div>
+      
+    </>
+  );
+};
 
-export default Jobs
+export default Jobs;

@@ -17,7 +17,7 @@ const Card = ({data}) => {
                 <div className='text-primary/70 text-base flex flex-wrap gap-2 mb-2 justify-around'>
                     <span><FiMapPin className='flex items-center gap-2'/>{jobLocation}</span>
                     <span><FiClock className='flex items-center gap-2'/>{employmentType}</span>
-                    <span><FiDollarSign className='flex items-center gap-2'/>{minPrice}-{maxPrice}</span>
+                    <span><FiDollarSign className='flex items-center gap-2'/>{minPrice}-{maxPrice}K</span>
                     <span><FiCalendar className='flex items-center gap-2'/>{postingDate}</span>   
                 </div>
                 <p className='text-base text-primary/70'>{description}</p>
