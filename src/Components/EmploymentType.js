@@ -25,12 +25,12 @@ const EmploymentType = ({handleChange}) => {
           name="test5"
         />
         <br />
+        
         <InputField
           handleChange={handleChange}
           value="temporary"
           title="Temporary"
           name="test5"
-          
         />
         
        

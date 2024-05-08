@@ -76,8 +76,8 @@ export const Home = () => {
     if (query) {
       filteredJobs = filteredItems;
     }
-    if(query2){
-      filteredJobs= filteredItems2;
+    if (query2) {
+      filteredJobs = filteredItems2;
     }
     if (selected) {
       filteredJobs = filteredJobs.filter(
@@ -93,7 +93,7 @@ export const Home = () => {
           parseInt(maxPrice) <= parseInt(selected) ||
           postingDate >= selected ||
           salaryType.toLowerCase() === selected.toLowerCase() ||
-          experienceLevel.toLowerCase()=== selected.toLowerCase()||
+          experienceLevel.toLowerCase() === selected.toLowerCase() ||
           employmentType.toLowerCase() === selected.toLowerCase()
       );
     }
