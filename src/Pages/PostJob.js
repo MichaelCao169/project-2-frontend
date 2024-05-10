@@ -6,13 +6,24 @@ const PostJob = () => {
   const [selectedOptions, setSelectedOptions] = useState(null);
   const {
     register,
-    handleSubmit,
+    handleSubmit,reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     data.skills = selectedOptions;
     console.log(data);
+    fetch("http://localhost:5000/post-job", 
+    { method: "POST",
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify(data)
+     }).then((res) =>res.json()).then((result) => {
+        console.log(result);
+        if(result.acknowleged===true){
+          alert("Job Posted Successfully")
+        }
+        reset();
+      })
   };
   const options = [
     { value: "Javascript", label: "Javascript" },
@@ -149,7 +160,7 @@ const PostJob = () => {
                 className="create-job-input"
               >
                 <option value="">Choose your job model</option>
-                <option value="Full-time">Full-timeFull-time</option>
+                <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
                 <option value="Temporary">Temporary</option>
               </select>
@@ -166,19 +177,17 @@ const PostJob = () => {
             rows={6}
             placeholder="Job's description"
           />
-           {/* row 8 */}
+          {/* row 8 */}
 
-           <div className="w-full">
+          <div className="w-full">
             <label className="block mb-2 text-lg">Contact</label>
             <input
-                type="email"
-                placeholder={"E.g: ricons@saudi.org"}
-                {...register("postedBy")}
-                className="create-job-input"
-              />
+              type="email"
+              placeholder={"E.g: ricons@saudi.org"}
+              {...register("postedBy")}
+              className="create-job-input"
+            />
           </div>
-
-
 
           <input
             type="submit"

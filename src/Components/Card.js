@@ -8,7 +8,7 @@ const Card = ({data}) => {
     <div>
         <section className='card'>
             <Link to={"/"} className="flex gap-4 flex-col sm:flex-row items-start">
-                <img src={companyLogo} alt=''></img>
+                <img src={companyLogo} alt='' className='w-20 h-20 object-contain'></img>
                 <div>
                     <h4 className='text-primary mb-1'>{companyName}</h4>
                     <h3 className='text-lg font-semibold mb-2'>{jobTitle}</h3>
