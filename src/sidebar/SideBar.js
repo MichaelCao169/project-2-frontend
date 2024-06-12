@@ -11,7 +11,7 @@ const SideBar = ({handleClick,handleChange}) => {
         <h3 className='text-lg font-bold mb-2'>
             Filters
         </h3>
-        <Location  handleChange={handleChange}/>
+        
         <Salary  handleChange={handleChange} handleClick={handleClick}/>
         <JobpostingDate  handleChange={handleChange}/>
         <WorkExperience  handleChange={handleChange}/>

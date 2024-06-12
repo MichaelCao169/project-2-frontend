@@ -9,7 +9,7 @@ const Banner = ({ query, handleInputChange, query2, handleInputChange2 }) => {
       </h1>
       <p className="text-lg text-black/70 mb-8">
         Welcome to <span className="text-blue font-medium">BotCV</span>, where
-        endless opportunities await.{" "}
+        endless opportunities await.
       </p>
       <form>
         <div className="flex justify-start md:flex-row flex-col md:gap-0 gap-4">
@@ -32,19 +32,23 @@ const Banner = ({ query, handleInputChange, query2, handleInputChange2 }) => {
           </div>
           <div
             className="flex md:rounded-sm-none rounded shadow-sm ring-1 ring-inset ring-gray-300 
-                focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 md:w-1/3 w-full"
+                focus-within:ring-2 focus-within:ring-inset  md:w-1/3 w-full"
           >
-            <input
-              type="text"
+            <select
               name="location"
               id="location"
-              placeholder="Location "
               className="block flex-1 border-0 bg-transparent
-                    py-1.5 pl-8 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6
+                    py-1.5 pl-8 text-gray-900 sm:text-sm sm:leading-6
                     focus:outline-none focus:ring-0 focus:border-indigo-600 transition-all duration-300"
               onChange={handleInputChange2}
               value={query2}
-            />
+            >
+              <option value="">All Location</option>
+              <option value="Ho Chi Minh">Ho Chi Minh</option>
+              <option value="Ha Noi">Ha Noi</option>
+              <option value="Da Nang">Da Nang</option>
+              <option value="Others">Others</option>
+            </select>
             <FiMapPin className="absolute mt-2.5 ml-2 text-gray-400" />
           </div>
           <button

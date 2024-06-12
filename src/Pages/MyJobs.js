@@ -14,7 +14,7 @@ const MyJobs = () => {
       .then((data) => {
         setJobs(data);
       });
-  }, [searchQuery]);
+  }, []);
   const handleSearch = () => {
     const filter = jobs.filter(
       (job) =>
@@ -27,23 +27,26 @@ const MyJobs = () => {
 
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/job/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.acknowledged === true) {
-        // Refetch the updated list of jobs
-        fetch(`http://localhost:5000/my-job/${email}`)
-        .then(res => res.json())
-        .then(updatedJobs => {
-          setJobs(updatedJobs);
-        })
-        .catch(error => console.error("Error fetching updated jobs:", error));
-      }
-    })
-    .catch(error => console.error("Error deleting job:", error));
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged === true) {
+          // Refetch the updated list of jobs
+          fetch(`http://localhost:5000/my-job/${email}`)
+            .then((res) => res.json())
+            .then((updatedJobs) => {
+              setJobs(updatedJobs);
+            })
+            .catch((error) =>
+              console.error("Error fetching updated jobs:", error)
+            );
+        }
+      })
+      .catch((error) => console.error("Error deleting job:", error));
+  };
   return (
+    
     <div className="max-screen-2xl container mx-auto xl:px-24 px-4">
       <div className="my-jobs-container">
         <h1 className="text-center text-2xl font-bold">Jobs List</h1>
@@ -128,17 +131,22 @@ const MyJobs = () => {
                           {job.companyName}
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        
                           ${job.minPrice} - ${job.maxPrice}
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            <button><Link to={`/edit-job/${job?._id}`}>Edit</Link></button>
+                          <button>
+                            <Link to={`/edit-job/${job?._id}`}>Edit</Link>
+                          </button>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          
-                          <button className="bg-red-700 py-2 px-6 text-white rounded-sm"
-                          onClick={()=>{handleDelete(job._id)}}
-                          >Delete</button>
+                          <button
+                            className="bg-red-700 py-2 px-6 text-white rounded-sm"
+                            onClick={() => {
+                              handleDelete(job._id);
+                            }}
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}

@@ -3,6 +3,7 @@ import Banner from "../Components/Banner";
 import Card from "../Components/Card";
 import Jobs from "./Jobs";
 import SideBar from "../sidebar/SideBar";
+import NavBar from "../Components/NavBar";
 
 export const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -37,9 +38,13 @@ export const Home = () => {
     (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
   );
   //filter jobs by location
-  const filteredItems2 = jobs.filter(
-    (job) => job.jobLocation.toLowerCase().indexOf(query2.toLowerCase()) !== -1
-  );
+  const filteredItems2 = query2 === "Others"
+  ? jobs.filter(
+      (job) => !["ho chi minh", "ha noi", "da nang"].includes(job.jobLocation.toLowerCase())
+    )
+  : jobs.filter(
+      (job) => job.jobLocation.toLowerCase().indexOf(query2.toLowerCase()) !== -1
+    );
   // Radio filter
   const handleChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -171,3 +176,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

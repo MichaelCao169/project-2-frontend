@@ -29,7 +29,7 @@ const NavBar = () => {
   const navItems = [
     { path: "/", title: "Start to search" },
     { path: "/my-job", title: "My Job" },
-    { path: "/salary", title: "Profile" },
+    { path: "/profile", title: "Profile" },
     { path: "/post-job", title: "Post A Job" },
   ];
 
@@ -79,7 +79,7 @@ const NavBar = () => {
             Login
           </Link>
           <Link
-            to="/sign-up"
+            to="/register"
             className="inline-block py-2 px-4 bg-blue rounded-md text-white hover:bg-opacity-75 transition duration-300 ease-in-out"
           >
             Sign up
