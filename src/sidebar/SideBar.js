@@ -1,9 +1,8 @@
 import React from 'react'
-import Location from './Location'
-import Salary from '../Components/Salary'
-import JobpostingDate from '../Components/JobpostingDate'
-import WorkExperience from '../Components/WorkExperience'
-import EmploymentType from '../Components/EmploymentType'
+import Salary from '../components/Salary'
+import JobpostingDate from '../components/JobpostingDate'
+import WorkExperience from '../components/WorkExperience'
+import EmploymentType from '../components/EmploymentType'
 
 const SideBar = ({handleClick,handleChange}) => {
   return (

@@ -184,3 +184,37 @@ li {
   color: white; /* Set text color */
 }
 
+
+
+
+
+.job-detail-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.job-detail-main {
+  flex: 2;
+}
+
+.job-detail-sidebar {
+  flex: 1;
+}
+
+.apply-button {
+  background-color: #20c997;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #f8f9fa;
+  color: #20c997;
+  padding: 0.5rem 1rem;
+  border: 1px solid #20c997;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}

@@ -1,29 +1,40 @@
-import { createContext, useState, useEffect } from "react";
-import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
-const UserDataContext = createContext({});
+const UserDataContext = createContext();
 
 export const UserDataProvider = ({ children }) => {
-    const [listGroup, setListGroup] = useState([]);
+  const { auth } = useAuth();
+  const [userData, setUserData] = useState(null);
 
-    const axiosPrivate = useAxiosPrivate();
-
-    useEffect(() => {
-        async function fetchGroups() {
-            axiosPrivate.get('/api/group/owned').then((res) => {
-                setListGroup(res.data);
-            }).catch(() => {
-
-            })
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth?.accessToken) {
+        try {
+          const endpoint = auth.userType === 'company' ? '/api/company' : '/api/user';
+          const response = await axios.get(endpoint, {
+            headers: {
+              Authorization: `Bearer ${auth.accessToken}`,
+            },
+          });
+          setUserData(response.data);
+        } catch (err) {
+          console.error('Error fetching user data', err);
         }
-        fetchGroups();
-    }, [axiosPrivate]);
+      }
+    };
 
-    return (
-        <UserDataContext.Provider value={{ listGroup, setListGroup }}>
-            {children}
-        </UserDataContext.Provider>
-    )
-}
+    fetchUserData();
+  }, [auth]);
 
-export default UserDataContext;
+  return (
+    <UserDataContext.Provider value={{ userData, setUserData }}>
+      {children}
+    </UserDataContext.Provider>
+  );
+};
+
+export const useUserData = () => {
+  return useContext(UserDataContext);
+};

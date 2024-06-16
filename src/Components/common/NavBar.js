@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiOutlineXMark, HiBars3 } from "react-icons/hi2";
-import PagesIcon from "./icons/PagesIcon/PagesIcon";
+import PagesIcon from "../icons/PagesIcon/PagesIcon";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,23 +26,32 @@ const NavBar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const navItems = [
-    { path: "/", title: "Start to search" },
-    { path: "/my-job", title: "My Job" },
-    { path: "/profile", title: "Profile" },
-    { path: "/post-job", title: "Post A Job" },
-  ];
+  const navItems = [{ path: "/", title: "Start to search" }];
 
   return (
     <header className="max-w-screen-2xl container mx-auto xl:px-24 px-4 relative">
       <nav className="flex justify-between items-center py-6">
-        <a
-          href="/"
-          className="flex items-center gap-2 text-2xl text-black font-bold"
-        >
-          <PagesIcon />
-          BotCV
-        </a>
+        <div className="flex items-center gap-[100px]">
+          <a
+            href="/"
+            className="flex items-center gap-2 text-2xl text-black font-bold"
+          >
+            <PagesIcon />
+            BotCV
+          </a>
+          <ul className="md:flex gap-12 hidden">
+            {navItems.map(({ path, title }) => (
+              <li key={path} className="text-base text-primary">
+                <NavLink
+                  to={path}
+                  className="hover:text-blue transition duration-300 ease-in-out"
+                >
+                  {title}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
         {isMobile ? (
           <div className="md:hidden absolute top-0 right-0">
             <button onClick={handleMenuToggler} className="p-2">
@@ -58,33 +67,21 @@ const NavBar = () => {
             </button>
           </div>
         ) : (
-          <ul className="md:flex gap-12 hidden">
-            {navItems.map(({ path, title }) => (
-              <li key={path} className="text-base text-primary">
-                <NavLink
-                  to={path}
-                  className="hover:text-blue transition duration-300 ease-in-out"
-                >
-                  {title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          <div className="flex items-center space-x-5">
+            <Link
+              to="/login"
+              className="inline-block py-2 px-4 border border-primary rounded-md text-primary hover:bg-blue hover:text-white transition duration-300 ease-in-out"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="inline-block py-2 px-4 bg-blue rounded-md text-white hover:bg-opacity-75 transition duration-300 ease-in-out"
+            >
+              Sign up
+            </Link>
+          </div>
         )}
-        <div className="text-base text-primary font-medium space-x-5 hidden lg:block ">
-          <Link
-            to="/login"
-            className="inline-block py-2 px-4 border border-primary rounded-md text-primary hover:bg-blue hover:text-white transition duration-300 ease-in-out"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="inline-block py-2 px-4 bg-blue rounded-md text-white hover:bg-opacity-75 transition duration-300 ease-in-out"
-          >
-            Sign up
-          </Link>
-        </div>
       </nav>
       {isMenuOpen && isMobile && (
         <div className="px-4 bg-primary py-5 rounded-md flex justify-end w-auto h-auto absolute top-full right-0 shadow-md border border-gray-300">

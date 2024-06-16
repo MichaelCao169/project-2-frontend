@@ -1,11 +1,11 @@
-const Loading = () => {
-    return <div className="flex justify-center items-center h-full w-full">
-        <img
-            alt="loading"
-            className="w-[192px] h-[192px] animate-breathing"
-            src={`${process.env.PUBLIC_URL}/logo192.png`}
-        />
-    </div>
-}
+import React from 'react';
 
-export default Loading
+const Loading = () => {
+  return (
+    <div className="loading">
+      <p>Loading...</p>
+    </div>
+  );
+};
+
+export default Loading;

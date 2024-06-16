@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Banner from "../Components/Banner";
-import Card from "../Components/Card";
-import Jobs from "./Jobs";
+import Banner from "../components/Banner";
+import Card from "../components/Card";
 import SideBar from "../sidebar/SideBar";
-import NavBar from "../Components/NavBar";
+import Pagination from "../components/Pagination";
 
-export const Home = () => {
+const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -14,164 +13,136 @@ export const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/all-jobs")
-    //fetch("jobs.json")
+    fetch("http://localhost:5000/api/jobs")
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
         setLoading(false);
       });
   }, []);
-  // this useState is used for searching input
+
   const [query, setQuery] = useState("");
   const handleInputChange = (e) => {
     setQuery(e.target.value);
   };
-  // this useState is used for searching location input
-  const [query2, setQuery2] = useState("");
+
+  const [queryLocation, setQueryLocation] = useState("");
   const handleLocationInputChange = (e) => {
-    setQuery2(e.target.value);
+    setQueryLocation(e.target.value);
   };
 
-  //filter jobs by title
-  const filteredItems = jobs.filter(
-    (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
+  const filteredByTitle = jobs.filter((job) =>
+    job.title.toLowerCase().includes(query.toLowerCase())
   );
-  //filter jobs by location
-  const filteredItems2 = query2 === "Others"
-  ? jobs.filter(
-      (job) => !["ho chi minh", "ha noi", "da nang"].includes(job.jobLocation.toLowerCase())
-    )
-  : jobs.filter(
-      (job) => job.jobLocation.toLowerCase().indexOf(query2.toLowerCase()) !== -1
-    );
-  // Radio filter
+
+  const filteredByLocation = queryLocation === "Others"
+    ? jobs.filter(
+        (job) => !["ho chi minh", "ha noi", "da nang"].includes(job.location.toLowerCase())
+      )
+    : jobs.filter(
+        (job) => job.location.toLowerCase().includes(queryLocation.toLowerCase())
+      );
+
   const handleChange = (e) => {
     setSelectedCategory(e.target.value);
   };
-  //pick button for filtering (2 ways binding)
+
   const handleClick = (e) => {
     setSelectedCategory(e.target.value);
   };
 
-  // process the index for splitting pages of cards with fixed amount of cards
   const calculatePageRange = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return { startIndex, endIndex };
   };
 
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredByTitle.length / itemsPerPage);
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
     }
   };
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  //main function
-
-  const filteredData = (jobs, selected, query) => {
+  const filterJobs = () => {
     let filteredJobs = jobs;
     if (query) {
-      filteredJobs = filteredItems;
+      filteredJobs = filteredByTitle;
     }
-    if (query2) {
-      filteredJobs = filteredItems2;
+    if (queryLocation) {
+      filteredJobs = filteredByLocation;
     }
-    if (selected) {
+    if (selectedCategory) {
       filteredJobs = filteredJobs.filter(
         ({
-          jobLocation,
-          maxPrice,
-          experienceLevel,
-          salaryType,
+          location,
+          salary,
+          experience,
           employmentType,
-          postingDate,
+          createdAt,
         }) =>
-          jobLocation.toLowerCase() === selected.toLowerCase() ||
-          parseInt(maxPrice) <= parseInt(selected) ||
-          postingDate >= selected ||
-          salaryType.toLowerCase() === selected.toLowerCase() ||
-          experienceLevel.toLowerCase() === selected.toLowerCase() ||
-          employmentType.toLowerCase() === selected.toLowerCase()
+          location.toLowerCase() === selectedCategory.toLowerCase() ||
+          parseInt(salary) <= parseInt(selectedCategory) ||
+          createdAt >= selectedCategory ||
+          experience.toLowerCase() === selectedCategory.toLowerCase() ||
+          employmentType.toLowerCase() === selectedCategory.toLowerCase()
       );
     }
-    console.log(filteredItems);
     const { startIndex, endIndex } = calculatePageRange();
-    // use slice function to slice data base on current page
-    filteredJobs = filteredJobs.slice(startIndex, endIndex);
-    return filteredJobs.map((data, i) => <Card key={i} data={data} />);
+    return filteredJobs.slice(startIndex, endIndex).map((data, i) => (
+      <Card key={i} data={data} />
+    ));
   };
 
-  const result = filteredData(jobs, selectedCategory, query);
+  const result = filterJobs();
 
   return (
     <div>
       <Banner
         query={query}
         handleInputChange={handleInputChange}
-        query2={query2}
-        handleInputChange2={handleLocationInputChange}
+        queryLocation={queryLocation}
+        handleLocationInputChange={handleLocationInputChange}
       />
       <div className="bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12">
-        {/* left size */}
         <div className="bg-white p-4 rounded">
           <SideBar handleChange={handleChange} handleClick={handleClick} />
         </div>
-
-        {/* main */}
 
         <div className="col-span-2 bg-white p-4 rounded">
           {isLoading ? (
             <p>Loading Jobs...</p>
           ) : result.length > 0 ? (
-            <Jobs result={result} />
-          ) : (
-            <>
-              <h3 className="font-semibold text-xl ml-5">
-                {result.length} Job Found !
-              </h3>
-            </>
-          )}
-
-          {/* front-end for page manipulation */}
-          {result.length > 0 ? (
-            <div className="flex justify-center mt-4 space-x-8">
-              <button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                className="hover:underline"
-              >
-                Previous
-              </button>
-              <span>
-                Page {currentPage} /{" "}
-                {Math.ceil(filteredItems.length / itemsPerPage)}
-              </span>
-              <button
-                onClick={nextPage}
-                disabled={
-                  currentPage === Math.ceil(filteredItems.length / itemsPerPage)
-                }
-                className="hover:underline"
-              >
-                Next
-              </button>
+            <div>
+              {result}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           ) : (
-            ""
+            <h3 className="font-semibold text-xl ml-5">
+              No Jobs Found!
+            </h3>
           )}
         </div>
 
-        {/* right side */}
-        <div className="bg-white p-4 rounded">upload cv </div>
+        <div className="bg-white p-4 rounded h-full">
+          <div className="h-full w-full bg-gradient-to-b from-[#191714] to-[#2234AE] text-white p-4 text-center md:text-left">
+            <div className="flex flex-col ml-2 h-full gap-6">
+              <h1 className="text-5xl font-bold mb-5 mt-[150px]">
+                Bot<span className="text-blue">CV</span>
+              </h1>
+              <div className="flex flex-col gap-1">
+                <h2 className="text-4xl font-bold mb-2">One Love</h2>
+                <h2 className="text-4xl font-bold mb-2">One Future</h2>
+                <p>BotCV - #1 Recruitment Website in Vietnam</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
