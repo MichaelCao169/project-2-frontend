@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { HiOutlineXMark, HiBars3 } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 import PagesIcon from "../icons/PagesIcon/PagesIcon";
 
 const NavBar = () => {
@@ -39,34 +38,9 @@ const NavBar = () => {
             <PagesIcon />
             BotCV
           </a>
-          <ul className="md:flex gap-12 hidden">
-            {navItems.map(({ path, title }) => (
-              <li key={path} className="text-base text-primary">
-                <NavLink
-                  to={path}
-                  className="hover:text-blue transition duration-300 ease-in-out"
-                >
-                  {title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          
         </div>
-        {isMobile ? (
-          <div className="md:hidden absolute top-0 right-0">
-            <button onClick={handleMenuToggler} className="p-2">
-              {isMenuOpen ? (
-                <div className="p-2">
-                  <HiOutlineXMark className="w-8 h-8 text-primary" />
-                </div>
-              ) : (
-                <div className="p-2">
-                  <HiBars3 className="w-8 h-8 text-primary" />
-                </div>
-              )}
-            </button>
-          </div>
-        ) : (
+        
           <div className="flex items-center space-x-5">
             <Link
               to="/login"
@@ -81,24 +55,7 @@ const NavBar = () => {
               Sign up
             </Link>
           </div>
-        )}
-      </nav>
-      {isMenuOpen && isMobile && (
-        <div className="px-4 bg-primary py-5 rounded-md flex justify-end w-auto h-auto absolute top-full right-0 shadow-md border border-gray-300">
-          <ul>
-            {navItems.map(({ path, title }) => (
-              <li key={path} className="text-base">
-                <NavLink
-                  to={path}
-                  className="block py-2 px-4 hover:text-white text-blue transition duration-300 ease-in-out"
-                >
-                  {title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+       </nav>
     </header>
   );
 };

@@ -23,7 +23,7 @@ const Card = ({ data }) => {
 
   return (
     <div className="card bg-white shadow-md rounded p-4 mb-4 flex items-center">
-      <Link to={`/job/${_id}`} className="flex items-center gap-4 w-full">
+      <Link to={`/user-dashboard/job/${_id}`} className="flex items-center gap-4 w-full">
         {company && company.companyLogo ? (
           <img
             src={company.companyLogo}

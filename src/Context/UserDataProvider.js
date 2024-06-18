@@ -12,15 +12,17 @@ export const UserDataProvider = ({ children }) => {
     const fetchUserData = async () => {
       if (auth?.accessToken) {
         try {
-          const endpoint = auth.userType === 'company' ? '/api/company' : '/api/user';
+          const endpoint = auth.role === 'company' ? 'http://localhost:5000/api/company/profile' : 'http://localhost:5000/api/user/me';
+          console.log('Fetching user data from:', endpoint);
           const response = await axios.get(endpoint, {
             headers: {
               Authorization: `Bearer ${auth.accessToken}`,
             },
           });
           setUserData(response.data);
+          console.log('UserData fetched successfully:', response.data);
         } catch (err) {
-          console.error('Error fetching user data', err);
+          console.error('Error fetching user data:', err);
         }
       }
     };

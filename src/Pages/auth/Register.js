@@ -5,7 +5,7 @@ import axios from "axios";
 import Tippy from "@tippyjs/react";
 import useAuth from "../../hooks/useAuth";
 
-const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USERNAME_REGEX = /^[A-z][A-z0-9-_ ]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%_?]).{6,24}$/;
 const EMAIL_REGEX = /^([^\s@]+@[^\s@]+\.[^\s@]+)$/;
 

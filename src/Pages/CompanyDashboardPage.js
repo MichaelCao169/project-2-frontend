@@ -12,6 +12,7 @@ const CompanyDashBoardPage = () => {
     { path: "home", title: "Start to search" },
     { path: "post-job", title: "Post A Job" },
     { path: "posted-jobs", title: "Manage Jobs" },
+    { path: "profile", title: "Company" },
   ];
 
   const handleLogout = () => {
@@ -23,12 +24,12 @@ const CompanyDashBoardPage = () => {
     <>
       <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 relative">
         <nav className="flex justify-between items-center py-6">
-          <div className="flex items-center gap-[200px] justify-around ">
+          <div className="flex items-center gap-[220px] justify-around ">
             <div className="flex items-center gap-2 text-2xl text-black font-bold">
               <PagesIcon />
               BotCV
             </div>
-            <ul className="flex gap-[150px]">
+            <ul className="flex gap-[100px]">
               {navItems.map(({ path, title }) => (
                 <li key={path} className="text-base text-primary">
                   <Link

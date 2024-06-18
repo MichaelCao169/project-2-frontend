@@ -19,55 +19,61 @@ import PostJob from "./components/company/PostJob";
 import CompanyPostedJobs from "./components/company/CompanyPostedJobs";
 import UserProfile from "./components/user/UserProfile";
 import PersistLogin from "./components/PersistLogin";
+import CompanyProfile from "./components/company/CompanyProfile";
+import UpdateJob from "./pages/UpdateJob";
 
 const App = () => {
   return (
-    <UserDataProvider>
-      <Routes>
-        <Route path="/" element={<LayOut />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="forgot" element={<Forgot />} />
-          <Route path="recover" element={<Recover />} />
-          <Route path="job/:id" element={<JobDetail />} />
-          <Route path="*" element={<NotFound />} />
+   
+     
+        <UserDataProvider>
+          <Routes>
+            <Route path="/" element={<LayOut />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot" element={<Forgot />} />
+              <Route path="recover" element={<Recover />} />
+              <Route path="job/:id" element={<JobDetail />} />
+              <Route path="*" element={<NotFound />} />
 
-          <Route element={<PersistLogin />}>
-            <Route element={<Authenticate />}>
-              <Route
-                path="user-dashboard/*"
-                element={
-                  <ProtectedRoutes role="user">
-                    <UserDashboardPage />
-                  </ProtectedRoutes>
-                }
-              >
-                <Route index element={<Home />} />{" "}
-                {/* Default route for user-dashboard */}
-                <Route path="home" element={<Home />} />
-                <Route path="profile" element={<UserProfile />} />
-                <Route path="jobs" element={<UserJobs />} />
-              </Route>
-              <Route
-                path="company-dashboard/*"
-                element={
-                  <ProtectedRoutes role="company">
-                    <CompanyDashboardPage />
-                  </ProtectedRoutes>
-                }
-              >
-                <Route index element={<Home />} />{" "}
-                {/* Default route for company-dashboard */}
-                <Route path="home" element={<Home />} />
-                <Route path="post-job" element={<PostJob />} />
-                <Route path="posted-jobs" element={<CompanyPostedJobs />} />
+              <Route element={<PersistLogin />}>
+                <Route element={<Authenticate />}>
+                  <Route
+                    path="user-dashboard/*"
+                    element={
+                      <ProtectedRoutes role="user">
+                        <UserDashboardPage />
+                      </ProtectedRoutes>
+                    }
+                  >
+                    <Route index element={<Home />} /> 
+                    <Route path="job/:id" element={<JobDetail />} />
+                    <Route path="home" element={<Home />} />
+                    <Route path="profile" element={<UserProfile />} />
+                    <Route path="jobs" element={<UserJobs />} />
+                  </Route>
+                  <Route
+                    path="company-dashboard/*"
+                    element={
+                      <ProtectedRoutes role="company">
+                        <CompanyDashboardPage />
+                      </ProtectedRoutes>
+                    }
+                  >
+                    <Route index element={<Home />} /> 
+                    <Route path="home" element={<Home />} />
+                    <Route path="post-job" element={<PostJob />} />
+                    <Route path="posted-jobs" element={<CompanyPostedJobs />} />
+                    <Route path="edit-job/:id" element={<UpdateJob />} />
+                    <Route path="profile" element={<CompanyProfile />} />
+                  </Route>
+                </Route>
               </Route>
             </Route>
-          </Route>
-        </Route>
-      </Routes>
-    </UserDataProvider>
+          </Routes>
+        </UserDataProvider>
+   
   );
 };
 
