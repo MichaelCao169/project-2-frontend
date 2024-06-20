@@ -57,7 +57,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+    <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 mt-10">
       <div className="bg-slate-100 py-10 px-4 lg:px-16">
         <h1 className="text-2xl font-bold mb-5">User Profile</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

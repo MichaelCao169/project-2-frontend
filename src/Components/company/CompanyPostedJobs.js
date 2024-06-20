@@ -12,9 +12,6 @@ const CompanyPostedJobs = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const email = userData?.email;
-  // console.log("Auth:", auth);
-  // console.log("UserData:", userData);
-  // console.log("Email:", email);
 
   useEffect(() => {
     if (userData?.email && auth?.accessToken) {
@@ -34,7 +31,7 @@ const CompanyPostedJobs = () => {
         });
     }
   }, [userData?.email, auth?.accessToken]);
-console.log(jobs);
+
   const handleSearch = () => {
     const filteredJobs = jobs.filter(
       (job) =>
@@ -72,7 +69,7 @@ console.log(jobs);
   }
 
   return (
-    <div className="max-screen-2xl container mx-auto xl:px-24 px-4">
+    <div className="max-screen-2xl container mx-auto xl:px-24 px-4 mt-10">
       <div className="my-jobs-container">
         <h1 className="text-center text-2xl font-bold">Jobs List</h1>
         <div>
@@ -127,7 +124,12 @@ console.log(jobs);
                       <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         JOB
                       </th>
-                     
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        COMPANY
+                      </th>
+                      <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        SALARY
+                      </th>
                       <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         EDIT
                       </th>
@@ -141,13 +143,17 @@ console.log(jobs);
                     {jobs.map((job, index) => (
                       <tr key={index}>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                          {job._id}
+                          <Link to={`/company-dashboard/job-applicants/${job._id}`} className="text-blue-500 hover:underline"> {job._id} </Link>
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                           {job.title}
                         </td>
-                       
-                       
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                          {job.company.companyName}
+                        </td>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                          {job.salary}
+                        </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <button className="bg-red-700 py-2 px-6 text-white rounded-sm">
                             <Link to={`/company-dashboard/edit-job/${job._id}`} className="text-white"> Edit</Link>

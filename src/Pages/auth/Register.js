@@ -80,7 +80,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (userType === "user" && !validName) {
       setHasError(true);
       setMessage("Not a valid username");
@@ -98,7 +98,7 @@ function Register() {
       setMessage("Confirm password doesn't match");
       return;
     }
-  
+
     if (userType === "company") {
       if (!companyName) {
         setHasError(true);
@@ -126,14 +126,14 @@ function Register() {
         return;
       }
     }
-  
+
     try {
       let response;
       if (userType === "user") {
         response = await axios.post("/api/auth/register/user", {
           email,
           password,
-          fullName: username
+          fullName: username,
         });
       } else if (userType === "company") {
         response = await axios.post("/api/auth/register/company", {
@@ -143,19 +143,19 @@ function Register() {
           companyLogo,
           description,
           industry,
-          website
+          website,
         });
       }
-  
+
       const accessToken = response?.data?.accessToken;
       const image = response?.data?.image;
-      
+
       let authData = {
         email,
         accessToken,
         image,
       };
-  
+
       if (userType === "user") {
         authData = {
           ...authData,
@@ -168,10 +168,10 @@ function Register() {
           companyLogo,
           description,
           industry,
-          website
+          website,
         };
       }
-  
+
       setTmpAuth(authData);
       setUsername("");
       setEmail("");
@@ -461,13 +461,8 @@ function Register() {
                 Your registered account
               </span>
               <div className="border-2 flex justify-between items-center px-5 py-3 rounded-md bg-slate-50">
-                <div className="w-[100px] flex-[0.3] justify-center flex">
-                  
-                </div>
+                <div className="w-[100px] flex-[0.3] justify-center flex"></div>
                 <div className="flex-[1] text-left px-5">
-                  <p className="font-bold text-base text-black truncate max-w-[200px]">
-                    {tmpAuth.username}
-                  </p>
                   <p className="text-sm text-black truncate max-w-[230px]">
                     {tmpAuth.email}
                   </p>
@@ -478,7 +473,7 @@ function Register() {
                 className="w-[60%] h-10 rounded-md bg-blue border-gray-600 border self-center my-5 text-white hover:shadow-md duration-300"
                 onClick={() => toHomePage()}
               >
-                Proceed login 
+                Proceed login
               </button>
 
               <div className="border-t-2 pt-4 mt-4 px-3 flex items-center">

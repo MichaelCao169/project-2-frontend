@@ -86,7 +86,7 @@ function Login() {
                 htmlFor="identifier"
                 className="absolute px-1 font-semibold bg-[var(--login-form-container)] left-3 z-20 text-blue text-xs"
               >
-                Username or Email
+                Email
               </label>
               <input
                 type="text"

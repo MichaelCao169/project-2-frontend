@@ -185,8 +185,7 @@ const PostJob = () => {
                 {...register("genderRequirement", { required: true })}
                 className="create-job-input"
               >
-                <option value="">Choose gender requirement</option>
-                <option value="Không yêu cầu">Không yêu cầu</option>
+                                <option value="Không yêu cầu">Không yêu cầu</option>
                 <option value="Nam">Nam</option>
                 <option value="Nữ">Nữ</option>
                 <option value="Khác">Khác</option>
